@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carry‑all — Week 10 Support & Quiz</title>
+  <style>
+    body {font-family: Arial, sans-serif; line-height: 1.5; margin: 1rem 2rem;}
+    fieldset {border: 1px solid #777; padding: 1rem;}
+    legend   {padding: 0 .5rem;}
+    .quiz-msg {margin-left: 1rem; font-weight: bold;}
+    button.check-btn {margin-top: 1rem; padding: .4rem .8rem; cursor: pointer;}
+  </style>
+</head>
+
+<body>
+
+<details open>
+  <summary><b>Week 10: Sanding & Finishing</b></summary>
+  <article>
+    <h4>Support Theory</h4>
+    <p>Sanding removes rough marks and prepares wood for a good finish. Start
+       with coarse paper (80 grit) then move to finer grits (120 → 180 → 240) and
+       always sand <em>with</em> the grain.  After dust is wiped away, apply a
+       finish like oil, wax or polyurethane to protect and beautify the timber.
+       Thin, even coats stop drips and keep the wood looking professional.</p>
+
+    <form class="quiz" data-week="Week 10" id="support-week10-quiz">
+      <fieldset>
+        <legend><b>Week 10 Quiz</b></legend>
+        <ol>
+          <li>
+            <p>Why do we sand timber before finishing it?</p>
+            <label><input data-correct="false" name="w10_q1" type="radio"> A. To remove the colour</label><br>
+            <label><input data-correct="true"  name="w10_q1" type="radio"> B. To make the wood soft and smooth</label><br>
+            <label><input data-correct="false" name="w10_q1" type="radio"> C. To help the glue stick better</label><br>
+            <label><input data-correct="false" name="w10_q1" type="radio"> D. To make it smell nicer</label>
+          </li>
+
+          <li>
+            <p>Which grit sandpaper is used first for rough wood?</p>
+            <label><input data-correct="true"  name="w10_q2" type="radio"> A. 80 grit (coarse)</label><br>
+            <label><input data-correct="false" name="w10_q2" type="radio"> B. 400 grit (very fine)</label><br>
+            <label><input data-correct="false" name="w10_q2" type="radio"> C. Sticky sandpaper</label><br>
+            <label><input data-correct="false" name="w10_q2" type="radio"> D. Water paper</label>
+          </li>
+
+          <li>
+            <p>What does sanding with the grain mean?</p>
+            <label><input data-correct="false" name="w10_q3" type="radio"> A. Sanding in any direction</label><br>
+            <label><input data-correct="false" name="w10_q3" type="radio"> B. Sanding across the surface randomly</label><br>
+            <label><input data-correct="true"  name="w10_q3" type="radio"> C. Sanding in the same direction as the timber lines</label><br>
+            <label><input data-correct="false" name="w10_q3" type="radio"> D. Sanding with a machine only</label>
+          </li>
+
+          <li>
+            <p>What is the main purpose of applying a finish like oil or wax?</p>
+            <label><input data-correct="false" name="w10_q4" type="radio"> A. To make the wood heavier</label><br>
+            <label><input data-correct="true"  name="w10_q4" type="radio"> B. To protect and improve appearance</label><br>
+            <label><input data-correct="false" name="w10_q4" type="radio"> C. To cover up mistakes</label><br>
+            <label><input data-correct="false" name="w10_q4" type="radio"> D. To change its shape</label>
+          </li>
+
+          <li>
+            <p>Why should we avoid leaving fingerprints on sanded timber before finishing?</p>
+            <label><input data-correct="false" name="w10_q5" type="radio"> A. It’s annoying</label><br>
+            <label><input data-correct="false" name="w10_q5" type="radio"> B. It wastes time</label><br>
+            <label><input data-correct="true"  name="w10_q5" type="radio"> C. They leave oily marks that ruin the finish</label><br>
+            <label><input data-correct="false" name="w10_q5" type="radio"> D. It’s against the rules</label>
+          </li>
+        </ol>
+
+        <button class="check-btn" type="button" onclick="submitQuiz(this,'S010')">Check Answers</button>
+        <span class="quiz-msg"></span>
+      </fieldset>
+    </form>
+  </article>
+</details>
+
+<script>
+function submitQuiz(btn,id){
+  const f=btn.closest('form'); let sc=0;
+  f.querySelectorAll('ol li').forEach(li=>{
+    const sel=li.querySelector('input[type=radio]:checked');
+    if(sel && sel.dataset.correct==='true') sc++;
+  });
+  const pct=Math.round(sc/5*100);
+  const nm=prompt('Enter your name:','').trim();
+  fetch('https://YOUR-APPS-SCRIPT-URL',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({timestamp:new Date().toISOString(),studentName:nm,week:f.dataset.week,quizNumber:id,score:pct})
+  }).then(()=>f.querySelector('.quiz-msg').textContent=`Submitted! Score: ${pct}%`)
+    .catch(()=>f.querySelector('.quiz-msg').textContent='Error submitting.');
+}
+</script>
+</body>
+</html>
