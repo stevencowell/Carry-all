@@ -7,33 +7,12 @@
   <title>Week 5 – Timber Careers & Technology</title>
   <link rel="stylesheet" href="carryall.css">
   
+<script src="quiz-submit.js"></script>
 <script>
-    function submitQuiz() {
-      const name = document.getElementById('studentName').value.trim();
-      if (!name) {
-        alert('Please enter your name.');
-        return;
-      }
-      const answers = {
-        q1: '2', q2: '2', q3: '2', q4: '3', q5: '3',
-        q6: '4', q7: '2', q8: '2', q9: '3', q10: '2'
-      };
-      let correct = 0;
-      const total = Object.keys(answers).length;
-      for (let q in answers) {
-        const sel = document.querySelector('input[name="' + q + '"]:checked');
-        if (sel && sel.value === answers[q]) correct++;
-      }
-      document.getElementById('quizResult').textContent = 
-        `Thanks ${name}, you scored ${correct}/${total}.`;
-      fetch('https://script.google.com/macros/s/AKfycbzF-svt49mb0H23s8YPNVMyq-ELWzWVf6zJsaIQqN8vf6Rz8d9jGezj-4da_il3prw3/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, week: 'Week 5', score: correct })
-      });
-      alert('Your mark has been submitted to your teacher');
-    }
+  const answers = {
+    q1: "2", q2: "2", q3: "2", q4: "3", q5: "3",
+    q6: "4", q7: "2", q8: "2", q9: "3", q10: "2"
+  };
 </script>
 
 </head>
@@ -155,7 +134,7 @@
             <label><input type="radio" name="q10" value="4"> Year 12 certificate with ATAR</label>
           </li>
         </ol>
-        <button type="button" onclick="submitQuiz()">Check Answers</button>
+        <button type="button" onclick="submitQuiz(this,'M005',answers)">Check Answers</button>
         <span id="quizResult" class="quiz-msg"></span>
       </form>
     </section>
